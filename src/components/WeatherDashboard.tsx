@@ -60,82 +60,84 @@ export function WeatherDashboard() {
         'Temperatura Mínima': `${Math.round(cityData.daily.temperature_2m_min[index + 1])}°C`
       }))
     })
-  
+
     const ws = XLSX.utils.json_to_sheet(exportData)
     const wb = XLSX.utils.book_new()
     XLSX.utils.book_append_sheet(wb, ws, "Previsão do Tempo")
     XLSX.writeFile(wb, "previsao-tempo.xlsx")
   }
-  
+
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-4">
       <div className="flex justify-end">
         <Button
           onClick={exportToExcel}
           disabled={loading || !Object.keys(weatherData).length}
+          
+          size="sm"
           className="flex items-center gap-2"
         >
           <Download className="h-4 w-4" />
           Exportar XLSX
         </Button>
       </div>
-    <div className="grid gap-6 md:grid-cols-3">
-      {cities.map((city) => (
-        <Card key={city.name} className="hover:shadow-lg transition-shadow">
-          <CardHeader className="space-y-1">
-            <CardTitle className="text-2xl flex items-center justify-between">
-              {city.name}
-              {loading ? (
-                <Skeleton className="h-4 w-24" />
-              ) : weatherData[city.name]?.current && (
-                <Badge variant="secondary" className="text-lg">
-                  {Math.round(weatherData[city.name].current.temperature_2m)}°C
-                </Badge>
-              )}
-            </CardTitle>
-          </CardHeader>
-          <CardContent>
-            {loading || !weatherData[city.name]?.daily ? (
-              <div className="space-y-2">
-                <Skeleton className="h-20 w-full" />
-                <Skeleton className="h-20 w-full" />
-                <Skeleton className="h-20 w-full" />
-              </div>
-            ) : (
-              <div className="space-y-4">
-                <div className="flex items-center gap-2">
-                  <Thermometer className="h-5 w-5 text-muted-foreground" />
-                  <span className="text-muted-foreground">Previsão para os próximos dias</span>
+      <div className="grid gap-6 md:grid-cols-3">
+        {cities.map((city) => (
+          <Card key={city.name} className="hover:shadow-lg transition-shadow">
+            <CardHeader className="space-y-1">
+              <CardTitle className="text-2xl flex items-center justify-between">
+                {city.name}
+                {loading ? (
+                  <Skeleton className="h-4 w-24" />
+                ) : weatherData[city.name]?.current && (
+                  <Badge variant="secondary" className="text-lg">
+                    {Math.round(weatherData[city.name].current.temperature_2m)}°C
+                  </Badge>
+                )}
+              </CardTitle>
+            </CardHeader>
+            <CardContent>
+              {loading || !weatherData[city.name]?.daily ? (
+                <div className="space-y-2">
+                  <Skeleton className="h-20 w-full" />
+                  <Skeleton className="h-20 w-full" />
+                  <Skeleton className="h-20 w-full" />
                 </div>
+              ) : (
+                <div className="space-y-4">
+                  <div className="flex items-center gap-2">
+                    <Thermometer className="h-5 w-5 text-muted-foreground" />
+                    <span className="text-muted-foreground">Previsão para os próximos dias</span>
+                  </div>
 
-                <div className="space-y-3">
-                  {weatherData[city.name].daily.time.slice(1, 4).map((date: string, index: number) => (
-                    <Card key={date} className="p-3">
-                      <div className="flex justify-between items-center">
-                        <span className="font-medium">
-                          {formatDate(date)}
-                        </span>
-                        <div className="flex items-center gap-3">
-                          <div className="flex items-center gap-1">
-                            <ThermometerSun className="h-4 w-4 text-orange-500" />
-                            <span>{Math.round(weatherData[city.name].daily.temperature_2m_max[index + 1])}°</span>
-                          </div>
-                          <div className="flex items-center gap-1">
-                            <ThermometerSnowflake className="h-4 w-4 text-blue-500" />
-                            <span>{Math.round(weatherData[city.name].daily.temperature_2m_min[index + 1])}°</span>
+                  <div className="space-y-3">
+                    {weatherData[city.name].daily.time.slice(1, 4).map((date: string, index: number) => (
+                      <Card key={date} className="p-3">
+                        <div className="flex justify-between items-center">
+                          <span className="font-medium">
+                            {formatDate(date)}
+                          </span>
+                          <div className="flex items-center gap-3">
+                            <div className="flex items-center gap-1">
+                              <ThermometerSun className="h-4 w-4 text-orange-500" />
+                              <span>{Math.round(weatherData[city.name].daily.temperature_2m_max[index + 1])}°</span>
+                            </div>
+                            <div className="flex items-center gap-1">
+                              <ThermometerSnowflake className="h-4 w-4 text-blue-500" />
+                              <span>{Math.round(weatherData[city.name].daily.temperature_2m_min[index + 1])}°</span>
+                            </div>
                           </div>
                         </div>
-                      </div>
-                    </Card>
-                  ))}
+                      </Card>
+                    ))}
+                  </div>
                 </div>
-              </div>
-            )}
-          </CardContent>
-        </Card>
-      ))}
-    </div>
+              )}
+            </CardContent>
+          </Card>
+        ))}
+      </div>
     </div>
   )
 }

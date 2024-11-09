@@ -101,7 +101,7 @@ export default function NewsScraper() {
           {result.data && (
             <Button
               onClick={exportToXLSX}
-              variant="outline"
+              
             >
               Exportar XLSX
             </Button>

@@ -4,6 +4,9 @@ import { AppSidebar } from "@/components/app-sidebar"
 import { Separator } from "@/components/ui/separator"
 import { WeatherDashboard } from "@/components/WeatherDashboard"
 import NewsScraper from "@/components/NewsScraper"
+import NewsLinkSummarizer from "@/components/NewsLinkSummarizer"
+import NewsTitleRewriter from "@/components/NewsTitleRewriter"
+
 import {
   SidebarInset,
   SidebarProvider,
@@ -54,10 +57,17 @@ export default function Page() {
             <section className="rounded-lg bg-card text-card-foreground shadow-sm">
               <WeatherDashboard />
             </section>
-
             <section className="rounded-lg border bg-card text-card-foreground shadow-sm h-[400px] overflow-auto">
               <NewsScraper />
             </section>
+            <div className="grid grid-cols-2 gap-4">
+              <section className="rounded-lg border bg-card text-card-foreground shadow-sm h-[400px] overflow-auto">
+                <NewsLinkSummarizer />
+              </section>
+              <section className="rounded-lg border bg-card text-card-foreground shadow-sm h-[400px] overflow-auto">
+                <NewsTitleRewriter />
+              </section>
+            </div>
           </div>
         </main>
       </SidebarInset>
