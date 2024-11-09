@@ -69,8 +69,9 @@ export function WeatherDashboard() {
 
 
   return (
-    <div className="space-y-4">
-      <div className="flex justify-end">
+    <div className="p-2">
+      <div className="flex justify-between items-center p-4">
+      <h2 className="text-2xl font-bold">Previsão do Tempo</h2>
         <Button
           onClick={exportToExcel}
           disabled={loading || !Object.keys(weatherData).length}
@@ -82,7 +83,7 @@ export function WeatherDashboard() {
           Exportar XLSX
         </Button>
       </div>
-      <div className="grid gap-6 md:grid-cols-3">
+      <div className="grid gap-6 md:grid-cols-3 p-4">
         {cities.map((city) => (
           <Card key={city.name} className="hover:shadow-lg transition-shadow">
             <CardHeader className="space-y-1">
