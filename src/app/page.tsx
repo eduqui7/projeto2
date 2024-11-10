@@ -9,7 +9,6 @@ import NewsTitleRewriter from "@/components/NewsTitleRewriter"
 import XEmbed from "@/components/XEmbed"
 import InstagramEmbed from "@/components/InstagramEmbed"
 import { NewsTicker } from '@/components/news-ticker'
-import { UOLNewsTicker } from '@/components/uol-news-ticker'
 
 import {
   SidebarInset,
@@ -60,29 +59,10 @@ export default function Page() {
 
         <main className="flex-1 space-y-4 p-4 md:p-8 pt-6">
           <div className="flex flex-col gap-4 md:gap-8">
-            <section className="rounded-lg border bg-card text-card-foreground shadow-sm min-h-[240px] max-h-[400px] overflow-auto">
-              <div className="pb-2 pt-4 w-full px-4 md:max-w-4xl md:mx-auto">
-                <h2 className="text-xl md:text-2xl font-bold">Últimas Notícias</h2>
-                <div className="flex items-center gap-2 mb-2">
-                  <img
-                    src="/logos/g1svg.svg"
-                    alt="G1 Logo"
-                    className="w-6 h-6 md:w-8 md:h-8"
-                  />
-                </div>
-                <NewsTicker />
-              </div>
-              <div className="pb-2 w-full px-4 md:max-w-4xl md:mx-auto">
-                <div className="flex items-center gap-2 mb-2">
-                  <img
-                    src="/logos/uol-logopng.png"
-                    alt="UOL Logo"
-                    className="w-5 h-5 md:w-6 md:h-6"
-                  />
-                </div>
-                <UOLNewsTicker />
-              </div>
-            </section>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <NewsTicker source="g1" />
+              <NewsTicker source="folha" />
+            </div>
 
             <section className="rounded-lg border bg-card text-card-foreground shadow-sm min-h-[300px] md:h-[465px] overflow-auto">
               <WeatherDashboard />
