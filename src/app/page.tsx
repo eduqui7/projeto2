@@ -1,94 +1,64 @@
-"use client"
+'use client';
+import { ArrowRight, ExternalLink, Sparkles } from 'lucide-react';
+import Link from 'next/link';
+import { Badge } from '@/components/ui/badge';
+import { Button } from '@/components/ui/button';
+import { DotLottieReact } from '@lottiefiles/dotlottie-react';
 
-import { AppSidebar } from "@/components/app-sidebar"
-import { Separator } from "@/components/ui/separator"
-import { WeatherDashboard } from "@/components/WeatherDashboard"
-import NewsScraper from "@/components/NewsScraper"
-import NewsLinkSummarizer from "@/components/NewsLinkSummarizer"
-import NewsTitleRewriter from "@/components/NewsTitleRewriter"
-import XEmbed from "@/components/XEmbed"
-import InstagramEmbed from "@/components/InstagramEmbed"
-import { NewsTicker } from '@/components/news-ticker'
-
-import {
-  SidebarInset,
-  SidebarProvider,
-  SidebarTrigger,
-} from "@/components/ui/sidebar"
-import * as React from "react"
-import { Moon, Sun } from "lucide-react"
-import { useTheme } from "next-themes"
-
-import { Button } from "@/components/ui/button"
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu"
-
-export default function Page() {
-  const { setTheme } = useTheme()
+const Hero12 = () => {
   return (
-    <SidebarProvider>
-      <AppSidebar />
-      <SidebarInset>
-        <header className="sticky top-0 z-50 flex flex-col border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
-          <div className="flex h-16 shrink-0 items-center justify-between">
-            <div className="flex items-center gap-2 px-3">
-              <SidebarTrigger />
-              <Separator orientation="vertical" className="mr-2 h-4" />
+    <section className="flex justify-center min-h-screen relative">
+      <div className="container relative">
+        <div className="flex flex-col items-center justify-center gap-8 px-4">
+          <div className="animate-fade-up space-y-8 text-center">
+
+            <DotLottieReact
+              src="https://lottie.host/65d696a5-fb77-4d0c-9070-b03d67b37a02/m7syyDbGeu.lottie"
+              loop
+              autoplay
+              className="w-full max-w-[400px] sm:max-w-[500px] lg:max-w-[600px] mx-auto"
+            />
+
+            <Badge variant="secondary" className="animate-fade-in">
+              <Sparkles className="mr-2 h-3 w-3" />
+              v1.0.0
+            </Badge>
+
+            <h1 className="text-3xl font-bold antialiased tracking-tighter sm:text-5xl md:text-6xl lg:text-7xl animate-fade-in">
+              Dashboard TVT
+            </h1>
+
+            <p className="text-muted-foreground antialiased mx-auto max-w-[600px] text-sm sm:text-xl leading-relaxed">
+              Bem-vindo ao dashboard para geração de conteúdo!
+              Aqui você encontrará algumas as ferramentas para controlar
+              as interações em tempo real, garantindo transmissões mais
+              ágeis e informativos.
+            </p>
+
+            <div className="flex flex-col sm:flex-row gap-4 justify-center">
+              <Link href="/dashboard">
+                <Button size="lg" className="group transition-all">
+                  Acessar o Dashboard
+                  <ArrowRight className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1" />
+                </Button>
+              </Link>
+
+              <Button variant="secondary" size="lg" className="group">
+                Saiba mais
+                <ExternalLink className="ml-2 h-4 w-4 transition-transform group-hover:scale-110" />
+              </Button>
             </div>
-            <div className="px-3">
-              <DropdownMenu>
-                <DropdownMenuTrigger asChild>
-                  <Button variant="outline" size="icon">
-                    <Sun className="h-[1.2rem] w-[1.2rem] rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0" />
-                    <Moon className="absolute h-[1.2rem] w-[1.2rem] rotate-90 scale-0 transition-all dark:rotate-0 dark:scale-100" />
-                    <span className="sr-only">Selecione o tema:</span>
-                  </Button>
-                </DropdownMenuTrigger>
-                <DropdownMenuContent align="end">
-                  <DropdownMenuItem onClick={() => setTheme("light")}>Light</DropdownMenuItem>
-                  <DropdownMenuItem onClick={() => setTheme("dark")}>Dark</DropdownMenuItem>
-                </DropdownMenuContent>
-              </DropdownMenu>
-            </div>
-          </div>
-        </header>
 
-        <main className="flex-1 space-y-4 p-4 md:p-8 pt-6">
-          <div className="flex flex-col gap-4 md:gap-8">
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              <NewsTicker source="g1" />
-              <NewsTicker source="folha" />
-            </div>
-
-            <section className="rounded-lg border bg-card text-card-foreground shadow-sm min-h-[300px] md:h-[465px] overflow-auto">
-              <WeatherDashboard />
-            </section>
-
-            <section className="rounded-lg border bg-card text-card-foreground shadow-sm min-h-[300px] md:h-[400px] overflow-auto">
-              <NewsScraper />
-            </section>
-
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              <section className="rounded-lg border bg-card text-card-foreground shadow-sm min-h-[300px] md:h-[400px] overflow-auto">
-                <NewsLinkSummarizer />
-              </section>
-              <section className="rounded-lg border bg-card text-card-foreground shadow-sm min-h-[300px] md:h-[400px] overflow-auto">
-                <NewsTitleRewriter />
-              </section>
-              <section className="rounded-lg border bg-card text-card-foreground shadow-sm min-h-[300px] md:h-[400px] overflow-auto">
-                <XEmbed />
-              </section>
-              <section className="rounded-lg border bg-card text-card-foreground shadow-sm min-h-[300px] md:h-[400px] overflow-auto">
-                <InstagramEmbed />
-              </section>
+            <div className="animate-fade-in opacity-60">
+              <p className="text-sm text-muted-foreground">
+                Desenvolvido com ❤️ e ☕ por <b>Eduardo Quirino</b> 😊
+              </p>
             </div>
           </div>
-        </main>
-      </SidebarInset>
-    </SidebarProvider>
-  )
-}
+        </div>
+      </div>
+    </section>
+  );
+};
+
+export default Hero12;

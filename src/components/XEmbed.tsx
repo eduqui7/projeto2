@@ -3,7 +3,7 @@
 import { useState, useEffect } from 'react'
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
-import { Label } from "@/components/ui/label"
+import { CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 
 const XEmbed = () => {
     const [postUrl, setPostUrl] = useState('')
@@ -31,7 +31,8 @@ const XEmbed = () => {
         setInputValue(e.target.value)
     }
 
-    const handleEmbed = () => {
+    const handleEmbed = (e: React.MouseEvent<HTMLButtonElement>) => {
+        e.preventDefault()
         if (inputValue.includes('twitter.com') || inputValue.includes('x.com')) {
             const id = extractTweetId(inputValue)
             if (id) {
@@ -100,49 +101,63 @@ const XEmbed = () => {
     }
 
     return (
-        <div className="w-full max-w-2xl mx-auto p-6">
-            <div className="mb-6">
-                <h2 className="text-2xl font-semibold">Card X/Twitter</h2>
+        <div className="container flex flex-col items-center justify-center gap-2">
+            <div className="w-full">
+                <CardHeader>
+                    <CardTitle className="text-3xl font-bold tracking-tight">
+                        Card <span className="text-primary">X/Twitter</span>
+                    </CardTitle>
+                    <CardDescription>
+                        Cole o URL do post para gerar um card incorporável
+                    </CardDescription>
+                </CardHeader>
+                <CardContent>
+                    <form className="flex flex-col gap-4">
+                        <Input
+                            type="url"
+                            value={inputValue}
+                            onChange={handleInputChange}
+                            placeholder="https://..."
+                            className="w-full"
+                            required
+                        />
+                        <div className="flex gap-2">
+                            <Button
+                                onClick={handleEmbed}
+                                className="w-full"
+                            >
+                                Gerar
+                            </Button>
+                            {tweetId && (
+                                <Button 
+                                    onClick={saveAsHtml}
+                                    variant="secondary"
+                                    className="w-full"
+                                >
+                                    Salvar HTML
+                                </Button>
+                            )}
+                        </div>
+                    </form>
+                </CardContent>
             </div>
-            <div className="space-y-4">
-                <div className="space-y-2">
-                    <Label htmlFor="tweet-url">Cole o URL do post</Label>
-                    <Input
-                        id="tweet-url"
-                        type="text"
-                        placeholder="https://"
-                        value={inputValue}
-                        onChange={handleInputChange}
-                    />
-                </div>
-                <div className="flex space-x-2">
-                    <Button 
-                        onClick={handleEmbed}
-                        variant="default"
-                    >
-                        Gerar
-                    </Button>
-                    {tweetId && (
-                        <Button 
-                            onClick={saveAsHtml}
-                            variant="secondary"
-                        >
-                            Salvar HTML
-                        </Button>
-                    )}
-                </div>
-                {tweetId && (
-                    <div className="mt-6 flex justify-center">
+
+            {tweetId && (
+                <div className="w-full">
+                    <CardHeader>
+                        <CardTitle>Preview</CardTitle>
+                    </CardHeader>
+                    <CardContent className="flex justify-center">
                         <iframe
                             src={`https://platform.twitter.com/embed/Tweet.html?id=${tweetId}&dnt=true`}
-                            width="300px"
-                            height="680px"
+                            width="550"
+                            height="680"
                             frameBorder="0"
                             scrolling="no"
                         />
-                    </div>
-                )}
-            </div>
+                    </CardContent>
+                </div>
+            )}
         </div>
     )
 }

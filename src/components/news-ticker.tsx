@@ -90,6 +90,7 @@ export function NewsTicker({ source }: NewsTickerProps) {
   const currentNews = news[currentIndex]
 
   return (
+    
     <HoverCard>
       <HoverCardTrigger asChild>
         <Card className="p-2 h-[100px] transition-all hover:shadow-md">
@@ -98,8 +99,8 @@ export function NewsTicker({ source }: NewsTickerProps) {
               <Image
                 src={source === 'g1' ? "/logos/g1svg.svg" : "/logos/folha-logo.svg"}
                 alt={`${source.toUpperCase()} Logo`}
-                width={24}
-                height={24}
+                width={source === 'g1' ? 24 : 100}
+                height={source === 'g1' ? 24 : 100}
                 className="dark:invert"
               />
               <Badge variant="secondary" className="text-xs">

@@ -25,22 +25,12 @@ const data = {
       items: [
         {
           title: "Início",
-          url: "#",
+          url: "/",
         },
         {
           title: "Sobre",
           url: "#",
         }
-      ],
-    },
-    {
-      title: "Web Apps",
-      url: "#",
-      items: [
-        {
-          title: "Previsão do Tempo",
-          url: "#",
-        },
       ],
     },
   ],
