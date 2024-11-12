@@ -28,30 +28,9 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
-const formatDateInPortuguese = (date: Date) => {
-  const months = [
-    'janeiro', 'fevereiro', 'março', 'abril', 'maio', 'junho',
-    'julho', 'agosto', 'setembro', 'outubro', 'novembro', 'dezembro'
-  ]
-
-  const day = date.getDate()
-  const month = months[date.getMonth()]
-  const year = date.getFullYear()
-
-  return `Hoje, ${day} de ${month} de ${year}`
-}
 
 export default function Page() {
   const { setTheme } = useTheme()
-  const [currentTime, setCurrentTime] = React.useState(new Date())
-
-  React.useEffect(() => {
-    const timer = setInterval(() => {
-      setCurrentTime(new Date())
-    }, 1000)
-
-    return () => clearInterval(timer)
-  }, [])
 
   return (
     <SidebarProvider>
@@ -62,11 +41,6 @@ export default function Page() {
             <div className="w-[100px] flex items-center gap-2 px-3">
               <SidebarTrigger />
               <Separator orientation="vertical" className="mr-2 h-4" />
-            </div>
-            <div className="flex-1 flex justify-center mt-1">
-              <span className="text-base font-bold antialiased">
-                {formatDateInPortuguese(currentTime)} - {currentTime.toLocaleTimeString('pt-BR')}
-              </span>
             </div>
             <div className="w-[100px] flex justify-end px-3">
               <DropdownMenu>
