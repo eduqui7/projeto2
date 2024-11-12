@@ -15,33 +15,50 @@ const cities = [
   { name: 'Salvador', lat: -12.97, lon: -38.51 }
 ]
 
-// Update the formatDate function
 const formatDate = (timestamp: number) => {
-    return new Date(timestamp * 1000).toLocaleDateString('pt-BR', { weekday: 'short' }).replace('.', '')
-  }  
-
-const getDailyForecasts = (forecastList: any[]) => {
-  const dailyForecasts = forecastList.reduce((acc: any, forecast: any) => {
-    const date = new Date(forecast.dt * 1000).toDateString()
-    
-    if (!acc[date]) {
-      acc[date] = {
-        dt: forecast.dt,
-        temp_max: forecast.main.temp_max,
-        temp_min: forecast.main.temp_min,
-        weather: forecast.weather
-      }
-    } else {
-      acc[date].temp_max = Math.max(acc[date].temp_max, forecast.main.temp_max)
-      acc[date].temp_min = Math.min(acc[date].temp_min, forecast.main.temp_min)
-    }
-    
-    return acc
-  }, {})
-
-  return Object.values(dailyForecasts)
+  return new Date(timestamp * 1000).toLocaleDateString('pt-BR', { weekday: 'short' }).replace('.', '')
 }
 
+const getDailyForecasts = (forecastList: any[]) => {
+  // Get tomorrow's date at midnight local time
+  const tomorrow = new Date()
+  tomorrow.setHours(0, 0, 0, 0)
+  tomorrow.setDate(tomorrow.getDate() + 1)
+
+  // Filter and group forecasts by day
+  const dailyForecasts = forecastList
+    .filter(forecast => {
+      const forecastDate = new Date(forecast.dt * 1000)
+      forecastDate.setHours(0, 0, 0, 0)
+      return forecastDate >= tomorrow
+    })
+    .reduce((acc: any, forecast: any) => {
+      const date = new Date(forecast.dt * 1000).toDateString()
+      
+      if (!acc[date]) {
+        acc[date] = {
+          dt: forecast.dt,
+          temp_max: forecast.main.temp_max,
+          temp_min: forecast.main.temp_min,
+          weather: forecast.weather
+        }
+      } else {
+        if (forecast.main.temp_max > acc[date].temp_max) {
+          acc[date].temp_max = forecast.main.temp_max
+        }
+        if (forecast.main.temp_min < acc[date].temp_min) {
+          acc[date].temp_min = forecast.main.temp_min
+        }
+      }
+      
+      return acc
+    }, {})
+
+  // Sort by date and get next 3 days
+  return Object.values(dailyForecasts)
+    .sort((a: any, b: any) => a.dt - b.dt)
+    .slice(0, 3)
+}
 export function OpenWeatherDashboard() {
   const [weatherData, setWeatherData] = useState<any>({})
   const [loading, setLoading] = useState(true)
