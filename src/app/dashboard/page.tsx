@@ -42,6 +42,8 @@ export default function Page() {
               <SidebarTrigger />
               <Separator orientation="vertical" className="mr-2 h-4" />
             </div>
+            <div className="flex-1 flex justify-center mt-1">
+            </div>
             <div className="w-[100px] flex justify-end px-3">
               <DropdownMenu>
                 <DropdownMenuTrigger asChild>
