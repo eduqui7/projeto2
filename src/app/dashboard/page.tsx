@@ -12,6 +12,7 @@ import { NewsTicker } from '@/components/news-ticker'
 import Reminders from "@/components/Reminders"
 import { Calendar } from "@/components/ui/calendar"
 import { OpenWeatherDashboard } from '@/components/OpenWeatherDashboard'
+import { MetroStatus } from '@/components/MetroStatus'
 
 import {
   SidebarInset,
@@ -103,6 +104,9 @@ export default function Page() {
               </section>
               <section className="rounded-lg border bg-card text-card-foreground shadow-sm min-h-[300px] md:h-[400px] overflow-auto">
                 <InstagramEmbed />
+              </section>
+              <section className="rounded-lg border bg-card text-card-foreground shadow-sm min-h-[300px] md:h-[400px] overflow-auto">
+                <MetroStatus />
               </section>
             </div>
           </div>
