@@ -4,7 +4,9 @@ import { useEffect, useState } from 'react'
 import { Badge } from '@/components/ui/badge'
 import { ScrollArea } from '@/components/ui/scroll-area'
 import { Skeleton } from '@/components/ui/skeleton'
+import { Button } from '@/components/ui/button'
 import clsx from 'clsx'
+import * as XLSX from 'xlsx'
 
 interface MetroLine {
   name: string
@@ -36,6 +38,28 @@ export function MetroStatus() {
     return () => clearInterval(interval)
   }, [])
 
+  const exportToExcel = () => {
+    if (!status) return
+
+    const exportData = status.lines.map(line => ({
+      'Número da Linha': line.number,
+      'Nome da Linha': line.name,
+      'Status': line.statusDescription,
+      'Motivo': line.reason || 'N/A',
+      'Data de Atualização': new Date(status.updatedAt).toLocaleString('pt-BR')
+    }))
+
+    const worksheet = XLSX.utils.json_to_sheet(exportData)
+    const workbook = XLSX.utils.book_new()
+    XLSX.utils.book_append_sheet(workbook, worksheet, 'Status do Metrô')
+    
+    // Generate file name with current date
+    const fileName = `status-metro.xlsx`
+    
+    // Save the file
+    XLSX.writeFile(workbook, fileName)
+  }
+
   if (loading) {
     return <Skeleton className="w-full h-[400px] rounded-lg" />
   }
@@ -43,12 +67,16 @@ export function MetroStatus() {
   return (
     <div className="p-4 h-full">
       <div className="flex justify-between items-center mb-4">
-        <h2 className="text-2xl font-semibold">Status das Linhas do Metrô</h2>
-        {status?.updatedAt && (
-          <span className="text-sm text-muted-foreground">
-            Atualizado em: {new Date(status.updatedAt).toLocaleString('pt-BR')}
-          </span>
-        )}
+        <div className="flex items-center gap-4">
+          {status?.updatedAt && (
+            <span className="text-sm text-muted-foreground">
+              Atualizado em: {new Date(status.updatedAt).toLocaleString('pt-BR')}
+            </span>
+          )}
+          <Button onClick={exportToExcel} className='ml-20'>
+            Exportar XLSX
+          </Button>
+        </div>
       </div>
       <ScrollArea className="h-[300px] pr-4">
         {status?.lines.map((line) => (
