@@ -23,7 +23,12 @@ export default function Page() {
     <div className="min-h-screen bg-background flex flex-col items-center">
       <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex h-14 items-center justify-between">
-          <h1 className="font-bold text-xl">Dashboard</h1>
+          <h1
+            className="font-bold text-xl cursor-pointer"
+            onClick={() => window.open('/mario/index.html', '_blank')}
+          >
+            Dashboard
+          </h1>
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
               <Button variant="ghost" size="icon">
